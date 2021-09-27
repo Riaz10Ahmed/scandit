@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="scandit-cordova-datacapture-text" version="6.9.2"
+    xmlns="http://apache.org/cordova/ns/plugins/1.0">
+
+    <name>ScanditTextCapture</name>
+
+    <js-module name="Cordova" src="www/js/Cordova/Cordova.js"></js-module>
+    <js-module name="Defaults" src="www/js/Cordova/Defaults.js"></js-module>
+    <js-module name="TextCaptureListenerProxy"
+        src="www/js/Cordova/TextCaptureListenerProxy.js"></js-module>
+
+    <js-module name="CapturedText" src="www/js/CapturedText.js">
+        <merges target="Scandit" />
+    </js-module>
+    <js-module name="TextCapture" src="www/js/TextCapture.js">
+        <merges target="Scandit" />
+    </js-module>
+    <js-module name="TextCapture+Related" src="www/js/TextCapture+Related.js">
+        <merges target="Scandit" />
+    </js-module>
+    <js-module name="TextCaptureSettings" src="www/js/TextCaptureSettings.js">
+        <merges target="Scandit" />
+    </js-module>
+
+    <engines>
+        <engine name="cordova-ios" version=">=5.0.0" />
+        <engine name="cordova-android" version=">=7.0.0" />
+    </engines>
+
+    <!-- iOS -->
+    <platform name="ios">
+        <config-file parent="/*" target="config.xml">
+            <feature name="ScanditTextCapture">
+                <param name="ios-package" value="ScanditTextCapture" />
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+
+        <header-file src="src/ios/ScanditTextCapture-Bridging-Header.h" type="BridgingHeader" />
+
+        <source-file src="src/ios/ScanditTextCapture.swift" />
+        <source-file src="src/ios/ScanditTextCaptureDefaults.swift" />
+        <source-file src="src/ios/ScanditTextCapture+TextCaptureDeserializerDelegate.swift" />
+        <source-file src="src/ios/ScanditTextCapture+TextCaptureListener.swift" />
+
+        <dependency id="scandit-cordova-datacapture-core" version="6.9.2" />
+
+        <framework src="ScanditTextCapture" spec="= 6.9.2" type="podspec" />
+        <framework src="ScanditOCR" spec="= 6.9.2" type="podspec" />
+    </platform>
+
+    <!-- Android -->
+    <platform name="android">
+        <config-file parent="/*" target="config.xml">
+            <feature name="ScanditTextCapture">
+                <param name="android-package"
+                    value="com.scandit.datacapture.cordova.text.ScanditTextCapture" />
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/ScanditTextCapture.kt"
+            target-dir="kotlin/com/scandit/datacapture/cordova/text" />
+        <!-- Actions -->
+        <source-file src="src/android/actions/ActionInjectDefaults.kt"
+            target-dir="kotlin/com/scandit/datacapture/cordova/text/actions" />
+        <source-file src="src/android/actions/ActionFinishCallback.kt"
+            target-dir="kotlin/com/scandit/datacapture/cordova/text/actions" />
+        <source-file src="src/android/actions/ActionSubscribeTextCapture.kt"
+            target-dir="kotlin/com/scandit/datacapture/cordova/text/actions" />
+        <!-- Callbacks -->
+        <source-file src="src/android/callbacks/TextCaptureCallback.kt"
+            target-dir="kotlin/com/scandit/datacapture/cordova/text/callbacks" />
+        <!-- Data -->
+        <source-file src="src/android/data/defaults/SerializableTextCaptureDefaults.kt"
+            target-dir="kotlin/com/scandit/datacapture/cordova/text/data/defaults" />
+        <source-file src="src/android/data/defaults/SerializableTextCaptureOverlayDefaults.kt"
+            target-dir="kotlin/com/scandit/datacapture/cordova/text/data/defaults" />
+        <source-file src="src/android/data/defaults/SerializableTextCaptureSettingsDefaults.kt"
+            target-dir="kotlin/com/scandit/datacapture/cordova/text/data/defaults" />
+        <source-file src="src/android/data/defaults/SerializableTextDefaults.kt"
+            target-dir="kotlin/com/scandit/datacapture/cordova/text/data/defaults" />
+        <!-- Errors -->
+        <!-- Factories -->
+        <source-file src="src/android/factories/TextCaptureActionFactory.kt"
+            target-dir="kotlin/com/scandit/datacapture/cordova/text/factories" />
+        <!-- Handlers -->
+        <source-file src="src/android/handlers/TextCaptureHandler.kt"
+            target-dir="kotlin/com/scandit/datacapture/cordova/text/handlers" />
+
+        <dependency id="scandit-cordova-datacapture-core" version="6.9.2" />
+
+        <framework custom="true" src="src/android/build.gradle" type="gradleReference" />
+        <framework src="androidx.appcompat:appcompat:1.1.0" />
+
+        <framework src="com.scandit.datacapture:text:6.9.2" />
+        <framework src="com.scandit.datacapture:text-base:6.9.2" />
+
+        <hook src="src/hooks/support-kotlin.js" type="after_plugin_install" />
+    </platform>
+
+</plugin>

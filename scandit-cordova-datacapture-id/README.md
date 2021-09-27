@@ -1,0 +1,1 @@
+ScanditIdCapture implements the ID capture capabilities of the Scandit Data Capture SDK.
